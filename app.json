@@ -1,0 +1,23 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/connectWifi/connectWifi",
+    "pages/connectSuccess/connectSuccess",
+    "pages/setMode/setMode",
+    "pages/connectMode/connectMode",
+    "pages/indexOld/indexOld",
+    "pages/logs/logs"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "允许小程序扫描您附件的WIFI"
+    }
+  },
+  "sitemapLocation": "sitemap.json"
+}

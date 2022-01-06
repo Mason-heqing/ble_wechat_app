@@ -1,0 +1,38 @@
+<view >
+  <view class="connectPage">
+    <view class="tips alignCenter">
+      <image src="../../image/mode.png" alt="" class="blueImg"/>
+    </view>
+    <view class="content_item">
+      <view class="input-item borderLine name-item">
+        <text class="input-name start">企业名称</text>
+        <input class='input' placeholder="请选择企业名称" bindinput="nameInput" value='{{name}}' disabled="true"></input>
+        <icon class="icon-small" type="cancel" color="#999" class="input-icon close-icon" size="23" wx:if="{{name}}" bindtap="clearName"></icon>
+        <image src="../../image/down.png" class="input-icon {{showCorpListBox?'roate':''}}" bindtap="getCorpList"></image>
+        <view class="touch-scroll corpListBOx" hidden="{{!showCorpListBox}}">
+          <block wx:for="{{corpList}}" wx:for-index="index" wx:key="index" data-item="{{item}}" >
+            <view class='list-item' data-name="{{item.name}}" bindtap="selectName">
+              <text class="name">{{item.name}}</text>
+            </view>
+          </block>
+        </view>
+      </view>
+      <!-- <view class="marginBottom borderLine input-item">
+        <text class="input-name start">业务连接</text>
+        <radio-group bindchange="radioChange" class="radio-box">
+          <label class="weui-cell weui-check__label" wx:for="{{items}}" wx-for-key="index" wx:key="index">
+            <radio value="{{item.value}}" checked="{{item.checked}}"/><view class="weui-cell__bd">{{item.name}}</view>
+          </label>
+        </radio-group>
+      </view> -->
+      <!-- <view class="marginBottom borderLine input-item" hidden="{{connectWay != '2'}}"> -->
+      <view class="marginBottom borderLine input-item">
+        <text class="input-name">业务系统</text>
+        <input class='input' placeholder="请填写业务系统地址" bindinput="urlInput" value='{{connectUrl}}'></input>
+      </view>
+    </view>
+    <view class="loginBtnBox btn-fixed width100">
+      <button bindtap="submit" class="content_item_item loginBtn">提交</button> 
+    </view>
+  </view>
+</view>

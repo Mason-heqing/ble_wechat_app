@@ -1,0 +1,108 @@
+<!--index.wxml-->
+<view >
+  <view class="connectPage" wx:if="{{!initBleSuccess || !initWifiSuccess}}">
+    <view class="tips" wx:if="{{bleConnnectting}}">
+      <image src="../../image/blue.png" alt="" class="blueImg"/>
+      <text class="connecting">蓝牙连接中</text><text class="dot"></text>
+      <view class="tips">
+        <text class="closeDv">请将手机靠近设备1米内</text>
+      </view>
+    </view>
+    <view wx:else>
+      <view class="tips" wx:if="{{!initBleSuccess}}">
+        <image  src="../../image/fail.png" alt="" class="blueImg" />
+        <text class="connecting">蓝牙连接失败</text>
+        <view class="tips">
+          <text class="closeDv">请先打开蓝牙和定位功能后重试</text>
+        </view>
+      </view>
+      <view class="tips" wx:elif="{{!initWifiSuccess}}">
+        <image  src="../../image/fail.png" alt="" class="blueImg" />
+        <text class="connecting">WIFI启用失败</text>
+        <view class="tips">
+          <text class="closeDv">请先打开手机WIFI功能后重试</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="container wifiConnectBox" wx:if="{{initBleSuccess && initWifiSuccess}}">
+    <view class="textAlignCenter">
+      <image src="../../image/blue.png" alt="" class="blueImg"/>
+    </view>
+    <view class="content_item_row width100">
+      <text class="content-item-title">联网方式：</text>
+      <radio-group class="radio-group" bindchange="netConnModeChange">
+        <radio class="radio" wx:for-items="{{netModeItems}}" wx:key="name" value="{{item.name}}" checked="{{item.checked}}">
+            <text>{{item.value}}</text>
+        </radio>
+      </radio-group>
+    </view>
+
+    <view class="width100" hidden="{{!showWifiConfig}}">
+      <view class="input-item borderLine">
+        <text class="input-name">网络</text>
+        <input class='cert-input-box' placeholder="{{wifiSSIDPlaceholder}}" bindinput="wifiSsidInput" value='{{ssid}}'></input>
+        <image src="../../image/down.png" class="input-icon" bindtap="showWifiList" wx:if="{{wifiSSIDPlaceholder != '请输入网络'}}"></image>
+      </view>
+      <view class="input-item">
+        <text class="input-name">密码</text>
+        <input class='cert-input-box' placeholder="请输入Wi-Fi密码" bindinput="wifiPwdInput" value='{{wifiPwdInput}}'></input>
+        <image src="../../image/eyes.png" class="input-icon"></image>
+      </view>
+      <view class="marginBottom">
+        <checkbox-group bindchange="wifiDhcpChange">
+          <label class="checkbox">
+            <checkbox value="true" checked="true"/>启用DHCP
+          </label>
+        </checkbox-group>
+      </view>
+      <view class="content_item width100" hidden="{{!showWifiNoDhcpConfig}}">
+        <view class="marginBottom">
+          <text class="yitaiIPName">IP地址</text>
+          <input class='input' placeholder="输入IP地址" bindinput="ipInput" value='{{ipInput}}'></input>
+        </view>
+        <view class="marginBottom">
+          <text class="yitaiIPName">子掩码</text>
+          <input class='input' placeholder="输入子掩码" bindinput="maskInput" value='{{maskInput}}'></input>
+        </view>
+        <view class="marginBottom">
+          <text class="yitaiIPName">网关IP</text>
+          <input class='input' placeholder="输入网关IP" bindinput="gatewayInput" value='{{gatewayInput}}'></input>
+        </view>
+      </view>
+      <view class="settingTips width100">
+        <text>以下Wi-Fi无法配置：\n1. 需要web页面认证的Wi-Fi。\n2. 需要证书认证的Wi-Fi。\n3. 只支持2.4GHz的网络</text>
+      </view>
+    </view>
+    <view class="content_item width100" hidden="{{!showEthConfig}}">
+      <view class="marginBottom">
+        <checkbox-group bindchange="ethDhcpChange">
+          <label class="checkbox">
+            <checkbox value="true" checked="true"/>启用DHCP
+          </label>
+        </checkbox-group>
+      </view>
+      <view class="content_item width100" hidden="{{!showEthNoDhcpConfig}}">
+        <view class="marginBottom">
+          <text class="yitaiIPName">IP地址</text>
+          <input class='input' placeholder="输入IP地址" bindinput="ipInput" value='{{ipInput}}'></input>
+        </view>
+        <view class="marginBottom">
+          <text class="yitaiIPName">子掩码</text>
+          <input class='input' placeholder="输入子掩码" bindinput="maskInput" value='{{maskInput}}'></input>
+        </view>
+        <view class="marginBottom">
+          <text class="yitaiIPName">网关IP</text>
+          <input class='input' placeholder="输入网关IP" bindinput="gatewayInput" value='{{gatewayInput}}'></input>
+        </view>
+      </view>
+    </view>
+    <view class="loginBtnBox btn-fixed width100 {{(showWifiConfig&&ssid)||(showEthConfig&&(dhcp||(!dhcp&&ipInput&&maskInput&&gatewayInput)))? 'deepBlue':''}}" hidden="{{!showSetting}}">
+      <button bindtap="configBLE" class="content_item_item loginBtn">配置</button> 
+    </view>
+  </view>
+</view>
+
+<!-- wifi列表 -->
+<wifi-box id="wifi-ref" bind:selectWifi="selecttWifiBtn" bind:flushWifi="flushWifiBtn" wifi-list="{{wifiList}}"></wifi-box>
